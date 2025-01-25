@@ -1505,10 +1505,10 @@ while ultastop != 1:
                                     print(
                                         "Debugging for Developers: \>  files[" + "][".join(
                                             real_armove_path) + "].pop(" + str(
-                                            real_remove_path[-1]) + ")")
+                                            original_remove_path[-1]) + ")")
                                     exec("files[" + "][".join(
                                         real_armove_path) + "].pop(" + str(
-                                        real_remove_path[-1]) + ")")
+                                        original_remove_path[-1]) + ")")
                                     remove_opening = "Cancel"
                                     opening = "Reset"
                                     manual_remove_stop = True
