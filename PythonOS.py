@@ -575,18 +575,18 @@ while ultastop != 1:
                         print("ERROR!!!!!!! " + str(e))
 
             if command == "!weather":
-                fetch_attempt = navigation()
-                if fetch_attempt[0]:
-                    current = Weather.getCurrentWeather(fetch_attempt[2], fetch_attempt[3]).Current()
+                current_location = input("Would you like to view the weather of your logged location (Yes/No)? ")
+                if "Y" in current_location:
+                    wsi = Security.indiceFind(user)
+                    current = Weather.getCurrentWeather(longitude[wsi], latitude[wsi]).Current()
                     current_temperature_2m = current.Variables(0).Value()
                     relative_humidity_2m = current.Variables(1).Value()
                     precipitation = current.Variables(2).Value()
                     wind = current.Variables(3).Value()
                     print("https://open-meteo.com  |  Weather data by Open-Meteo.com")
 
+                    print(f"<[ Welcome to {display_location[wsi]}! ]>")
                     whitespace(1)
-                    print(f"<[ Welcome to {fetch_attempt[1]}! ]>")
-                    whitespace(2)
                     temperature_description = ""
                     humidity_description = ""
                     precipitation_description = ""
@@ -654,6 +654,87 @@ while ultastop != 1:
                     print(f"The relative humidity is {str(round(relative_humidity_2m))}%. {humidity_description}")
                     print(f"The rainfall is {str(round(precipitation))}mm. {precipitation_description}")
                     print(f"The wind is {str(round(wind))}km/h. {wind_description}")
+                else:
+                    fetch_attempt = navigation()
+                    if fetch_attempt[0]:
+                        current = Weather.getCurrentWeather(fetch_attempt[2], fetch_attempt[3]).Current()
+                        current_temperature_2m = current.Variables(0).Value()
+                        relative_humidity_2m = current.Variables(1).Value()
+                        precipitation = current.Variables(2).Value()
+                        wind = current.Variables(3).Value()
+                        print("https://open-meteo.com  |  Weather data by Open-Meteo.com")
+
+                        print(f"<[ Welcome to {fetch_attempt[1]}! ]>")
+                        whitespace(1)
+                        temperature_description = ""
+                        humidity_description = ""
+                        precipitation_description = ""
+                        wind_description = ""
+                        if current_temperature_2m < -30:
+                            temperature_description = "Take shelter immediately!"
+                        elif current_temperature_2m < -10:
+                            temperature_description = "Chance of frostbite so be careful!"
+                        elif current_temperature_2m < 0:
+                            temperature_description = "It's freezing cold!"
+                        elif current_temperature_2m < 6:
+                            temperature_description = "Better wear a few jackets!"
+                        elif current_temperature_2m < 15:
+                            temperature_description = "A bit chilly, eh?"
+                        elif current_temperature_2m < 21:
+                            temperature_description = "Best for a quick jog!"
+                        elif current_temperature_2m < 27:
+                            temperatue_description = "It's gettin' a bit warm over here!"
+                        elif current_temperature_2m < 34:
+                            temperature_description = "Make sure to hydrate, you don't wanna look like Jimmy over there..."
+                        elif current_temperature_2m < 37:
+                            temperature_description = "You need cooling ASAP!"
+                        else:
+                            temperature_description = "TAKE SHELTER, NOW!"
+
+                        if relative_humidity_2m < 20:
+                            humidity_description = "Be careful with sparks! You're in dry territory, my friend."
+                        elif relative_humidity_2m < 40:
+                            humidity_description = "It's a bit dry, maybe look out for scratches."
+                        elif relative_humidity_2m < 60:
+                            humidity_description = "Drink a bit more water, it's starting to get dry."
+                        elif relative_humidity_2m < 80:
+                            humidity_description = "Not too dry, not too moist."
+                        else:
+                            humidity_description = "You might want to take off that sweater.."
+
+                        if precipitation < 0.5:
+                            precipitation_description = "No rain today!"
+                        elif precipitation < 2.5:
+                            precipitation_description = "A slight drizzle, a raincoat should do the trick."
+                        elif precipitation < 7.6:
+                            precipitation_description = "The rain is starting to ramp up, get your umbrellas!"
+                        elif precipitation < 15:
+                            precipitation_description = "There's a rainstorm forming..."
+                        else:
+                            precipitation_description = "BRO FIND SHELTER"
+
+                        if wind < 12:
+                            wind_description = "Not much wind today!"
+                        elif wind < 30:
+                            wind_description = "Quite swindy over here!"
+                        elif wind < 51:
+                            wind_description = "The wind's starting to ramp up.. Consider checking for hurricanes or monsoons."
+                        elif wind < 87:
+                            wind_description = "GALE WIND! GALE WIND ALERT! TAKE SHELTER!"
+                        elif wind < 117:
+                            wind_description = "STORM WIND! STORM WIND ALERT! TAKE SHELTER!"
+                        else:
+                            wind_description = "HURRICANE LEVEL WINS ARE INBOUND, FIND SHELTER NOW!"
+
+                        print("Here's today's report:")
+                        whitespace(1)
+
+                        print(f"The temperature is {str(round(current_temperature_2m))}C. {temperature_description}")
+                        print(f"The relative humidity is {str(round(relative_humidity_2m))}%. {humidity_description}")
+                        print(f"The rainfall is {str(round(precipitation))}mm. {precipitation_description}")
+                        print(f"The wind is {str(round(wind))}km/h. {wind_description}")
+
+
 
             if command == "!setup":
                 print("Tutorial Guy: Welcome to PythonOS!")
@@ -798,7 +879,7 @@ while ultastop != 1:
 
 
             if command == "!settings view":
-                
+
                 stars = []
                 for s in range(0, len(passwords[users.index(user)]) - 1):
                     stars.append("*")
@@ -949,6 +1030,13 @@ while ultastop != 1:
                     originalLine = codeLine
                     if codeLine == "Finish":
                         coding = False
+                    elif codeLine == "Edit":
+                        edit_line = input("# Which line do you want to edit? ")
+                        edit_to = input("# What do you want it to be now? ")
+                        return_code.pop(int(edit_line))
+                        type_code.pop(int(edit_line))
+                        return_code.insert(int(edit_line), edit_to)
+                        type_code.insert(int(edit_line), edit_to)
                     else:
                         codeLine = Graphing.transform(codeLine, "~", "    ")
                         return_code.append(codeLine)
@@ -1017,8 +1105,8 @@ while ultastop != 1:
                         prompt="   |   ".join(logs) + " | AI Assistant: ",
                         max_tokens=50
                     )
-                    print("AI Assistant: " + response.generations[0].text)
-                    logs.append("AI Assistant: " + response.generations[0].text)
+                    print("AI Assistant: " + Graphing.transform(response.generations[0].text, "@", "\n"))
+                    logs.append("AI Assistant: " + Graphing.transform(response.generations[0].text, "@", "\n"))
 
             if command == "!midi":
                 selected_file = input("Please input the computer path to the MIDI file: ")
@@ -1077,7 +1165,7 @@ while ultastop != 1:
                     else:
                         registered_latitude = Cypher.decrypt(selection6)
 
-    
+
             if command == "!data reset":
                 if Security.verify(user):
                     users = ["Administrator"]
