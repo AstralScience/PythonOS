@@ -579,6 +579,8 @@ while ultastop != 1:
                     relative_humidity_2m = current.Variables(1).Value()
                     precipitation = current.Variables(2).Value()
                     wind = current.Variables(3).Value()
+                    print("https://open-meteo.com  |  Weather data by Open-Meteo.com")
+                    whitespace(1)
                     print(f"<[ Welcome to {fetch_attempt[1]}! ]>")
                     whitespace(2)
                     temperature_description = ""
@@ -1491,6 +1493,10 @@ while ultastop != 1:
             whitespace(2)
         except Exception as e:
             print("It looks like there's an error! " + str(e))
+
+
+
+
 
 
 
