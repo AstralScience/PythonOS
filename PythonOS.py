@@ -1020,7 +1020,8 @@ while ultastop != 1:
             if command == "!QCode":
                 print("Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
                 whitespace(1)
-                print("Coding Space: (Use the symbol '~' to indent.")
+                print("Coding Space: (Use the symbol '~' to indent)")
+                print("'Finish' to stop coding | 'Edit' to edit a line of your code.")
                 coding = True
                 line = 1
                 return_code = []
@@ -1033,10 +1034,13 @@ while ultastop != 1:
                     elif codeLine == "Edit":
                         edit_line = input("# Which line do you want to edit? ")
                         edit_to = input("# What do you want it to be now? ")
-                        return_code.pop(int(edit_line))
-                        type_code.pop(int(edit_line))
-                        return_code.insert(int(edit_line), edit_to)
-                        type_code.insert(int(edit_line), edit_to)
+                        return_code.pop(int(edit_line)-1)
+                        type_code.pop(int(edit_line)-1)
+                        return_code.insert(int(edit_line)-1, edit_to)
+                        type_code.insert(int(edit_line)-1, edit_to)
+                        clear(1)
+                        for i in range(0, len(return_code)):
+                            print(f"Line {i+1} | >_ {return_code[i]}")
                     else:
                         codeLine = Graphing.transform(codeLine, "~", "    ")
                         return_code.append(codeLine)
