@@ -1040,7 +1040,13 @@ while ultastop != 1:
                         type_code.insert(int(edit_line)-1, edit_to)
                         clear(1)
                         for i in range(0, len(return_code)):
+                            print(
+                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                            whitespace(1)
+                            print("Coding Space: (Use the symbol '~' to indent)")
+                            print("# 'Finish' to stop coding | 'Edit' to edit a line of your code.")
                             print(f"Line {i+1} | >_ {return_code[i]}")
+
                     else:
                         codeLine = Graphing.transform(codeLine, "~", "    ")
                         return_code.append(codeLine)
