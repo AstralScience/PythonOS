@@ -302,19 +302,19 @@ class Cypher:
             return "".join(string_map)
     def ceaser(str, movement, count):
         for f in range(0, count):
-            alphabet = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+            alphabet = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
             string_map = []
             for char in str:
                 if char in alphabet:
                     char_index = alphabet.index(char)
-                    string_map.append(alphabet[char_index + movement])
+                    string_map.append(alphabet[(char_index + movement) % len(alphabet)])
                 else:
                     string_map.append(char)
             return "".join(string_map)
     def flip(str):
         alphabet = list(
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
         reverse_alphabet = alphabet[::-1]
 
         string_map = []
@@ -352,7 +352,7 @@ class Cypher:
         return d
 
     def decrypt(str):
-        
+
 
         a = Cypher.ceaser(str, 1, 1)
 
@@ -377,7 +377,7 @@ print("Hong Kong" in "Hong Kong, Ting Kau")
 
 
 
-print(Cypher.decrypt(Cypher.encrypt("hello!")))
+print(Cypher.decrypt(Cypher.encrypt("hello! 123, abc's, [edit]")))
 print("IF YOU STILL SEE THIS MESSAGE, FIX THE CODE.")
 
 current_time = datetime.now()
@@ -1159,35 +1159,38 @@ while ultastop != 1:
                     if selection1 == 'Skip':
                         print("Users not loaded.")
                     else:
-                        users = Cypher.decrypt(selection1)
-                       
+                        users = eval(Cypher.decrypt(selection1))
+
                     selection2 = input("Load Passwords: ")
                     if selection2 == 'Skip':
                         print("Passwords not loaded.")
                     else:
-                        passwords = Cypher.decrypt(selection2)
-                       
+                        print(passwords)
+                        passwords = eval(Cypher.decrypt(selection2))
+                        print(passwords)
+                        print(passwords[Security.indiceFind(user)])
+
                     selection3 = input("Load Files: ")
                     if selection3 == 'Skip':
                         print("Files not loaded.")
                     else:
-                        files = Cypher.decrypt(selection3)
-                      
+                        files = eval(Cypher.decrypt(selection3))
+
                     selection4 = input("Load Registered Locations: ")
                     if selection4 == 'Skip':
                         print("Locations not loaded.")
                     else:
-                        registered_locations = Cypher.decrypt(selection4)
+                        registered_locations = eval(Cypher.decrypt(selection4))
                     selection5 = input("Load Registered Longitude: ")
                     if selection5 == 'Skip':
                         print("Longitude not loaded.")
                     else:
-                        registered_longitude = Cypher.decrypt(selection5)
+                        registered_longitude = eval(Cypher.decrypt(selection5))
                     selection6 = input("Load Registered Latitude: ")
                     if selection6 == 'Skip':
                         print("Latitude not loaded.")
                     else:
-                        registered_latitude = Cypher.decrypt(selection6)
+                        registered_latitude = eval(Cypher.decrypt(selection6))
 
 
             if command == "!data reset":
