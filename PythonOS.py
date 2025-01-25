@@ -939,13 +939,16 @@ while ultastop != 1:
                 coding = True
                 line = 1
                 return_code = []
+                type_code = []
                 while coding == True:
                     codeLine = input(f"Line {line} | >_ ")
+                    originalLine = codeLine
                     if codeLine == "Finish":
                         coding = False
                     else:
                         codeLine = Graphing.transform(codeLine, "~", "    ")
                         return_code.append(codeLine)
+                        type_code.append(originalLine)
                         line += 1
 
                 whitespace(2)
@@ -966,6 +969,9 @@ while ultastop != 1:
                     whitespace(1)
                     print("Output:")
                     exec("\n".join(return_code))
+                    whitespace(1)
+                    print(f"Q# File Format: {"@".join(type_code)}"))
+                
 
 
 
@@ -1365,7 +1371,7 @@ while ultastop != 1:
                                 elif remove_opening == "Finish" and steps >= 2:
                                     original_remove_path = copy.deepcopy(real_remove_path)
                                     (real_remove_path).pop(-1)
-                                   
+
 
                                     real_armove_path = copy.deepcopy(real_remove_path)
 
@@ -1496,14 +1502,6 @@ while ultastop != 1:
             whitespace(2)
         except Exception as e:
             print("It looks like there's an error! " + str(e))
-
-
-
-
-
-
-
-
 
 
 
