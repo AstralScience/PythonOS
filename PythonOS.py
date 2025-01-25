@@ -302,7 +302,7 @@ class Cypher:
             return "".join(string_map)
     def ceaser(str, movement, count):
         for f in range(0, count):
-            alphabet = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+            alphabet = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
 
             string_map = []
             for char in str:
@@ -340,18 +340,29 @@ class Cypher:
 
 
     def encrypt(str):
+       
         a = Cypher.qwerty(str, 2)
+ 
         b = Cypher.ceaser(a, 2, 1)
+        
         c = Cypher.flip(b)
-        d = Cypher.ceaser(b, -1, 1)
+       
+        d = Cypher.ceaser(c, (-1), 1)
+       
         return d
 
     def decrypt(str):
+        print("Decryption:")
+        
         a = Cypher.ceaser(str, 1, 1)
+        
         b = Cypher.flip(a)
+        
         c = Cypher.ceaser(b, -2, 1)
+        
         d = Cypher.reverseQwerty(c, 2)
         return d
+
 
 
 
@@ -366,7 +377,7 @@ print("Hong Kong" in "Hong Kong, Ting Kau")
 
 
 
-
+print(Cypher.decrypt(Cypher.encrypt("hello!")))
 print("IF YOU STILL SEE THIS MESSAGE, FIX THE CODE.")
 
 current_time = datetime.now()
@@ -1149,16 +1160,19 @@ while ultastop != 1:
                         print("Users not loaded.")
                     else:
                         users = Cypher.decrypt(selection1)
+                        print(users)
                     selection2 = input("Load Passwords: ")
                     if selection2 == 'Skip':
                         print("Passwords not loaded.")
                     else:
                         passwords = Cypher.decrypt(selection2)
+                        print(passwsords)
                     selection3 = input("Load Files: ")
                     if selection3 == 'Skip':
                         print("Files not loaded.")
                     else:
                         files = Cypher.decrypt(selection3)
+                        print(files)
                     selection4 = input("Load Registered Locations: ")
                     if selection4 == 'Skip':
                         print("Locations not loaded.")
