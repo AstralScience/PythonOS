@@ -275,14 +275,17 @@ class QSharp:
         global bonus_commands
         global bonus_executions
         global commandlist
-        commands.remove(title)
-        command_indice = bonus_commands.index(title)
-        bonus_commands.remove(title)
-        for i in range(0, len(commandlist)):
-            if title in commandlist[i]:
-                commandlist.pop(i)
-                break
-        bonus_executions.pop(command_indice)
+        if title in bonus_commands:
+            commands.remove(title)
+            command_indice = bonus_commands.index(title)
+            bonus_commands.remove(title)
+            for i in range(0, len(commandlist)):
+                if title in commandlist[i]:
+                    commandlist.pop(i)
+                    break
+            bonus_executions.pop(command_indice)
+        else:
+            print(f"cannot remove command '{title}', as it is not a bonus command")
 
 class Cypher:
     def qwerty(str, count):
@@ -697,7 +700,7 @@ while ultastop != 1:
                         file_names.append(files[user_index][i][-1] + " (File | Index " + str(i + 1) + ")")
 
                 print("   <{}><{}><{}>   ".join(file_names))
-                print("Tutorial Guy: Look at that! Those are you files!")
+                print("Tutorial Guy: Look at that! Those are your files!")
                 time.sleep(2.5)
                 print(
                     "Tutorial Guy: You know, you could actually see even more if you try '!files manage', but that's for YOU to check out!")
@@ -970,7 +973,7 @@ while ultastop != 1:
                     print("Output:")
                     exec("\n".join(return_code))
                     whitespace(1)
-                    print(f"Q# File Format: {"@".join(type_code)}"))
+                    print(f"Q# File Format: {"@".join(type_code)}")
                 
 
 
