@@ -798,6 +798,7 @@ while ultastop != 1:
 
 
             if command == "!settings view":
+                
                 stars = []
                 for s in range(0, len(passwords[users.index(user)]) - 1):
                     stars.append("*")
@@ -974,7 +975,7 @@ while ultastop != 1:
                     exec("\n".join(return_code))
                     whitespace(1)
                     print(f"Q# File Format: {"@".join(type_code)}")
-                
+
 
 
 
@@ -1045,36 +1046,38 @@ while ultastop != 1:
                     print(
                         "Check your encryptions to load everything up. Say 'Skip' if you don't want to load a specific part of data.")
                     whitespace(1)
-                    selection = input("Load Users: ")
-                    if selection == Skip:
+                    selection1 = input("Load Users: ")
+                    if selection1 == 'Skip':
                         print("Users not loaded.")
                     else:
-                        users = selection
-                    selection = input("Load Passwords: ")
-                    if selection == Skip:
+                        users = Cypher.decrypt(selection1)
+                    selection2 = input("Load Passwords: ")
+                    if selection2 == 'Skip':
                         print("Passwords not loaded.")
                     else:
-                        passwords = selection
-                    selection = input("Load Files: ")
-                    if selection == Skip:
+                        passwords = Cypher.decrypt(selection2)
+                    selection3 = input("Load Files: ")
+                    if selection3 == 'Skip':
                         print("Files not loaded.")
                     else:
-                        files = selection
-                    selection = input("Load Registered Locations: ")
-                    if selection == Skip:
+                        files = Cypher.decrypt(selection3)
+                    selection4 = input("Load Registered Locations: ")
+                    if selection4 == 'Skip':
                         print("Locations not loaded.")
                     else:
-                        registered_locations = selection
-                    selection = input("Load Registered Longitude: ")
-                    if selection == Skip:
+                        registered_locations = Cypher.decrypt(selection4)
+                    selection5 = input("Load Registered Longitude: ")
+                    if selection5 == 'Skip':
                         print("Longitude not loaded.")
                     else:
-                        registered_longitude = selection
-                    selection = input("Load Registered Latitude: ")
-                    if selection == Skip:
+                        registered_longitude = Cypher.decrypt(selection5)
+                    selection6 = input("Load Registered Latitude: ")
+                    if selection6 == 'Skip':
                         print("Latitude not loaded.")
                     else:
-                        registered_latitude = selection
+                        registered_latitude = Cypher.decrypt(selection6)
+
+    
             if command == "!data reset":
                 if Security.verify(user):
                     users = ["Administrator"]
@@ -1087,10 +1090,15 @@ while ultastop != 1:
                     print("Process finished.")
 
             if command == "!files manage":
+                print("step")
                 execute_path = [str(users.index(user))]
+                print("step")
                 openstop = False
+                print("step")
                 user_index = users.index(user)
+                print("step")
                 open_path = copy.deepcopy(files[user_index])
+                print("step")
                 print(
                     "Please select a folder/file to open (Select an index | Say 'Reset' to reset path | Say 'Stop' to stop the process): ")
                 print("Additionally, say 'Add' to add files, 'Remove' to remove files, or 'Execute' to run Q# files")
