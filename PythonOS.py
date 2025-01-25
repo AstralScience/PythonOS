@@ -580,6 +580,7 @@ while ultastop != 1:
                     precipitation = current.Variables(2).Value()
                     wind = current.Variables(3).Value()
                     print("https://open-meteo.com  |  Weather data by Open-Meteo.com")
+
                     whitespace(1)
                     print(f"<[ Welcome to {fetch_attempt[1]}! ]>")
                     whitespace(2)
@@ -1362,7 +1363,9 @@ while ultastop != 1:
                                         print(
                                             "There's... nothing in this folder/file....")
                                 elif remove_opening == "Finish" and steps >= 2:
+                                    original_remove_path = copy.deepcopy(real_remove_path)
                                     (real_remove_path).pop(-1)
+                                   
 
                                     real_armove_path = copy.deepcopy(real_remove_path)
 
@@ -1493,6 +1496,10 @@ while ultastop != 1:
             whitespace(2)
         except Exception as e:
             print("It looks like there's an error! " + str(e))
+
+
+
+
 
 
 
