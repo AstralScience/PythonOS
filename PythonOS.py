@@ -11,7 +11,11 @@ import mido
 import openmeteo_requests
 import requests_cache
 import pandas as pd
+from tkinter import *
+from tkinter import ttk
 from retry_requests import retry
+import threading
+import pyperclip
 
 
 
@@ -31,9 +35,70 @@ openmeteo = openmeteo_requests.Client(session = retry_session)
 
 
 
+running = False
+
+main = None
+clicks = None
+finished_cps = False
+rank = None
 
 
+class CPS:
+    def wait():
+        global main
+        global clicks
+        global running
+        global finished_cps
+        global rank
+        running = True
+        time.sleep(5)
+        running = False
+        finishing_cps = clicks/5
+        if finishing_cps < 1.0:
+            rank.config(text="Your Rank: Microwave | wha- how lazy are you?")
+        elif finishing_cps < 2.0:
+            rank.config(text="Your Rank: Sloth | Get practicing dude!")
+        elif finishing_cps < 3.0:
+            rank.config(text="Your Rank: Turtle | Meh...")
+        elif finishing_cps < 4.0:
+            rank.config(text="Your Rank: Panda | Good enough I guess")
+        elif finishing_cps < 5.0:
+            rank.config(text="Your Rank: Bull | Starting to get good I see!")
+        elif finishing_cps < 6.7:
+            rank.config(text="Your Rank: Hare | Nice! Almost reachin' the average max!")
+        elif finishing_cps < 8:
+            rank.config(text="Your Rank: Cheetah | You're really good at this! Better than a lot of people!")
+        else:
+            rank.config(text="Your Rank: Falcon | AIN'T NO WAY!")
+        if main != None:
+            main.config(text=f"Finished with CPS of {clicks/5}!")
+        finished_cps = True
+        time.sleep(5)
+        clicks = 0
+        main.config(text="Press to Start!")
+        rank.config(text="Your Rank: Undefined")
+        finished_cps = False
 
+    def click():
+        global main
+        global clicks
+        global running
+        global finished_cps
+        global rank
+        if clicks != None:
+            if finished_cps:
+                main.config(text=f"CPS: {clicks/5}")
+            else:
+                if running == False:
+                    clicks = 1
+                    if main != None:
+                        main.config(text="Clicks: 1")
+                    threading.Thread(target=CPS.wait).start()
+
+                else:
+                    clicks += 1
+
+                    main.config(text=f"Clicks: {clicks}")
 
 
 
@@ -566,6 +631,29 @@ while ultastop != 1:
                                        int(input("Now select a range: ")))
                     except Exception as e:
                         print("YOU GOT AN ERROR!! " + str(e))
+
+            if command == "!cps":
+                clicks = 0
+                running = False
+                root = Tk()
+                root.title("Click Speed Test")
+                root.geometry("350x300")
+                root.resizable(False, False)
+
+
+                label = ttk.Label(root, text="Clicks Per Second Measurer")
+
+
+                main = Button(root, text="Press to Start", height=10, width=50, command=CPS.click)
+
+                rank = ttk.Label(root, text="Your Rank: Undefined")
+                label.pack(padx=20, pady=20)
+                main.pack(padx=20,side=TOP)
+                rank.pack(padx=20, pady=20)
+
+
+                root.mainloop()
+
 
             if command == "!graph advanced":
                 function = input("Please input the function (say Syntax for function formatting) : ")
@@ -1337,55 +1425,127 @@ while ultastop != 1:
                 line = 1
                 return_code = []
                 type_code = []
-                while coding == True:
-                    codeLine = input(f"Line {line} | >_ ")
-                    originalLine = codeLine
-                    if codeLine == "Finish":
-                        coding = False
-                    elif codeLine == "Edit":
-                        edit_line = input("# Which line do you want to edit? ")
-                        edit_to = input("# What do you want it to be now? ")
-                        return_code.pop(int(edit_line)-1)
-                        type_code.pop(int(edit_line)-1)
-                        return_code.insert(int(edit_line)-1, edit_to)
-                        type_code.insert(int(edit_line)-1, edit_to)
-                        clear(1)
-                        print(
-                            "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
-                        whitespace(1)
-                        print("Coding Space: (Use the symbol '~' to indent)")
-                        print(
-                            "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
-                        for i in range(0, len(return_code)):
+                importing = input("Would you like to import from Q# file format text (Y/N)? ")
+                if "Y" in importing:
+                    whitespace(2)
+                    print("Got it!")
+                    returning = input("Input the Q# File Format Text: ")
+
+                    inbetween = eval("['" + str(Graphing.transform(returning, "@", "', '")) + "']")
+
+
+                    return_code = inbetween
+                    type_code = eval(f"['{returning}']")
+
+               
+
+                    
 
 
 
-                            print(f"Line {i+1} | >_ {return_code[i]}")
+
+
+                    clear(1)
+
+                    print(
+                        "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                    whitespace(1)
+
+                    print("Coding Space: (Use the symbol '~' to indent)")
+                    print(
+                        "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
+                    for i in range(0, len(return_code)):
+                        print(f"Line {i + 1} | >_ {return_code[i]}")
+                    line = len(inbetween) + 1
+
+                    while coding == True:
+                        codeLine = input(f"Line {line} | >_ ")
+                        originalLine = codeLine
+                        if codeLine == "Finish":
+                            coding = False
+                        elif codeLine == "Edit":
+                            edit_line = input("# Which line do you want to edit? ")
+                            edit_to = input("# What do you want it to be now? ")
+                            return_code.pop(int(edit_line) - 1)
+                            type_code.pop(int(edit_line) - 1)
+                            return_code.insert(int(edit_line) - 1, edit_to)
+                            type_code.insert(int(edit_line) - 1, edit_to)
+                            clear(1)
+                            print(
+                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                            whitespace(1)
+                            print("Coding Space: (Use the symbol '~' to indent)")
+                            print(
+                                "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
+                            for i in range(0, len(return_code)):
+                                print(f"Line {i + 1} | >_ {return_code[i]}")
+                                line += 1
+                        elif codeLine == "Push":
+                            new_line = input("# Where do you want your new line? ")
+                            new_to = input("# What do you want the content of your new line to be? ")
+                            return_code.insert(int(new_line) - 1, new_to)
+                            type_code.insert(int(new_line) - 1, new_to)
+                            clear(1)
+                            print(
+                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                            whitespace(1)
+                            print("Coding Space: (Use the symbol '~' to indent)")
+                            print(
+                                "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
+                            for i in range(0, len(return_code)):
+                                print(f"Line {i + 1} | >_ {return_code[i]}")
                             line += 1
-                    elif codeLine == "Push":
-                        new_line = input("# Where do you want your new line? ")
-                        new_to = input("# What do you want the content of your new line to be? ")
-                        return_code.insert(int(new_line)-1, new_to)
-                        type_code.insert(int(new_line) - 1, new_to)
-                        clear(1)
-                        print(
-                            "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
-                        whitespace(1)
-                        print("Coding Space: (Use the symbol '~' to indent)")
-                        print(
-                            "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
-                        for i in range(0, len(return_code)):
 
+                        else:
+                            codeLine = Graphing.transform(codeLine, "~", "    ")
+                            return_code.append(codeLine)
+                            type_code.append(originalLine)
+                            line += 1
 
+                else:
+                    while coding == True:
+                        codeLine = input(f"Line {line} | >_ ")
+                        originalLine = codeLine
+                        if codeLine == "Finish":
+                            coding = False
+                        elif codeLine == "Edit":
+                            edit_line = input("# Which line do you want to edit? ")
+                            edit_to = input("# What do you want it to be now? ")
+                            return_code.pop(int(edit_line) - 1)
+                            type_code.pop(int(edit_line) - 1)
+                            return_code.insert(int(edit_line) - 1, edit_to)
+                            type_code.insert(int(edit_line) - 1, edit_to)
+                            clear(1)
+                            print(
+                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                            whitespace(1)
+                            print("Coding Space: (Use the symbol '~' to indent)")
+                            print(
+                                "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
+                            for i in range(0, len(return_code)):
+                                print(f"Line {i + 1} | >_ {return_code[i]}")
+                                line += 1
+                        elif codeLine == "Push":
+                            new_line = input("# Where do you want your new line? ")
+                            new_to = input("# What do you want the content of your new line to be? ")
+                            return_code.insert(int(new_line) - 1, new_to)
+                            type_code.insert(int(new_line) - 1, new_to)
+                            clear(1)
+                            print(
+                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                            whitespace(1)
+                            print("Coding Space: (Use the symbol '~' to indent)")
+                            print(
+                                "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
+                            for i in range(0, len(return_code)):
+                                print(f"Line {i + 1} | >_ {return_code[i]}")
+                            line += 1
 
-                            print(f"Line {i + 1} | >_ {return_code[i]}")
-                        line += 1
-
-                    else:
-                        codeLine = Graphing.transform(codeLine, "~", "    ")
-                        return_code.append(codeLine)
-                        type_code.append(originalLine)
-                        line += 1
+                        else:
+                            codeLine = Graphing.transform(codeLine, "~", "    ")
+                            return_code.append(codeLine)
+                            type_code.append(originalLine)
+                            line += 1
 
                 whitespace(2)
                 print("Now analyzing security...")
@@ -1404,6 +1564,9 @@ while ultastop != 1:
                     print("Your code has been deemed safe!")
                     whitespace(1)
                     print(f"Q# File Format: {"@".join(type_code)}")
+                    print("Q# File Format can be used when you're trying to store Q# Code into a file using !files manage")
+                    print("The File Format Code should now be stored in your computer's clipboard. (Ctrl+V to paste in)")
+                    pyperclip.copy("@".join(type_code))
                     whitespace(2)
                     print("Output:")
                     exec("\n".join(return_code))
@@ -2062,6 +2225,8 @@ while ultastop != 1:
             whitespace(2)
         except Exception as e:
             print("It looks like there's an error! " + str(e))
+            time.sleep(2)
+            whitespace(5)
 
 
 
