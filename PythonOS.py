@@ -1350,26 +1350,36 @@ while ultastop != 1:
                         return_code.insert(int(edit_line)-1, edit_to)
                         type_code.insert(int(edit_line)-1, edit_to)
                         clear(1)
+                        print(
+                            "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                        whitespace(1)
+                        print("Coding Space: (Use the symbol '~' to indent)")
+                        print(
+                            "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
                         for i in range(0, len(return_code)):
-                            print(
-                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
-                            whitespace(1)
-                            print("Coding Space: (Use the symbol '~' to indent)")
-                            print("# 'Finish' to stop coding | 'Edit' to edit a line of your code.")
+
+
+
                             print(f"Line {i+1} | >_ {return_code[i]}")
+                            line += 1
                     elif codeLine == "Push":
                         new_line = input("# Where do you want your new line? ")
                         new_to = input("# What do you want the content of your new line to be? ")
                         return_code.insert(int(new_line)-1, new_to)
                         type_code.insert(int(new_line) - 1, new_to)
                         clear(1)
+                        print(
+                            "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                        whitespace(1)
+                        print("Coding Space: (Use the symbol '~' to indent)")
+                        print(
+                            "'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
                         for i in range(0, len(return_code)):
-                            print(
-                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
-                            whitespace(1)
-                            print("Coding Space: (Use the symbol '~' to indent)")
-                            print("# 'Finish' to stop coding | 'Edit' to edit a line of your code.")
+
+
+
                             print(f"Line {i + 1} | >_ {return_code[i]}")
+                        line += 1
 
                     else:
                         codeLine = Graphing.transform(codeLine, "~", "    ")
@@ -1393,10 +1403,12 @@ while ultastop != 1:
                 else:
                     print("Your code has been deemed safe!")
                     whitespace(1)
+                    print(f"Q# File Format: {"@".join(type_code)}")
+                    whitespace(2)
                     print("Output:")
                     exec("\n".join(return_code))
                     whitespace(1)
-                    print(f"Q# File Format: {"@".join(type_code)}")
+
 
 
 
