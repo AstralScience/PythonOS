@@ -64,8 +64,10 @@ class CPS:
             rank.config(text="Your Rank: Panda | Good enough I guess")
         elif finishing_cps < 5.0:
             rank.config(text="Your Rank: Bull | Starting to get good I see!")
+        elif finishing_cps < 6.0:
+            rank.config(text="You Rank: Hare | Quite fast!")
         elif finishing_cps < 6.7:
-            rank.config(text="Your Rank: Hare | Nice! Almost reachin' the average max!")
+            rank.config(text="Your Rank: Leopard | Nice! Almost reachin' the average max!")
         elif finishing_cps < 8:
             rank.config(text="Your Rank: Cheetah | You're really good at this! Better than a lot of people!")
         else:
@@ -789,7 +791,7 @@ while ultastop != 1:
                         elif current_temperature_2m < 21:
                             temperature_description = "Best for a quick jog!"
                         elif current_temperature_2m < 27:
-                            temperatue_description = "It's gettin' a bit warm over here!"
+                            temperature_description = "It's gettin' a bit warm over here!"
                         elif current_temperature_2m < 34:
                             temperature_description = "Make sure to hydrate, you don't wanna look like Jimmy over there..."
                         elif current_temperature_2m < 37:
@@ -1396,12 +1398,12 @@ while ultastop != 1:
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 273.15)} {unit_2}")
                     elif unit_1 == "F":
                         if unit_2 == "C":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1.8, 32)} {unit_2}")
-                        if unit_2 == "K":
                             print(f"{value_1} {unit_1} = {conversion(value_1, (-32), 0.55555, 0)} {unit_2}")
+                        if unit_2 == "K":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, (-32), 0.55555, 273.15)} {unit_2}")
                     elif unit_1 == "K":
                         if unit_2 == "C":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 273.15)} {unit_2}")
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, (-273.15))} {unit_2}")
                         if unit_2 == "F":
                             print(f"{value_1} {unit_1} = {conversion(value_1, (-273.15), 1.8, 32)} {unit_2}")
                 else:
@@ -1437,9 +1439,9 @@ while ultastop != 1:
                     return_code = inbetween
                     type_code = eval(f"['{returning}']")
 
-               
 
-                    
+
+
 
 
 
