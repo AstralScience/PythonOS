@@ -329,7 +329,8 @@ commandlist = ["!cmds | Lists every command", "!help | Gives brief description o
                            "!settings change | Allows you to change the current settings",
                            "!weather | Allows you to view the weather of a region",
                         "!data save | Saves OS data", "!data load | Loads data to OS", "!data reset | Resets most data",
-               "!plotting bar | Plots a bar chart", "!plotting pie | Plots a pie chart", "!browse | Browse the public files of your computer"]
+               "!plotting bar | Plots a bar chart", "!plotting pie | Plots a pie chart", "!browse | Browse the public files of your computer",
+               "!cps | Calculates your click speed"]
 class QSharp:
     def createCommand(title, description, execute):
         global commands
@@ -481,7 +482,7 @@ visibility = [True]
 registered_locations = []
 registered_longitude = []
 registered_latitude = []
-commands = ["!cmds", "!help", "!users", "!listplot", "!logout", "!exit", "!graph basic", "!graph advanced", "!files check", "!files manage", "!ai", "!settings view", "!settings change", "!weather", "!settings reset", "!QCode", "!run", "!data save", "!data load", "!browse", "!plotting bar", "!plotting pie"]
+commands = ["!cmds", "!help", "!users", "!listplot", "!logout", "!exit", "!graph basic", "!graph advanced", "!files check", "!files manage", "!ai", "!settings view", "!settings change", "!weather", "!settings reset", "!QCode", "!run", "!data save", "!data load", "!browse", "!plotting bar", "!plotting pie", "!cps"]
 bonus_commands = []
 bonus_executions = []
 stop = 0
@@ -1295,17 +1296,17 @@ while ultastop != 1:
                     unit_2 = input("What is your second unit? ")
                     value_1 = int(input(f"How many {unit_1} do you want to convert to {unit_2}? "))
                     if unit_1 == "cbcm":
-                        if unit_2 == "cbm":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-06, 0)} {unit_2}")
+                        if unit_2 == "cbm": 
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-6, 0)} {unit_2}")
                         if unit_2 == "L":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-03, 0)} {unit_2}")
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-3, 0)} {unit_2}")
                         if unit_2 == "mL":
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 0)} {unit_2}")
                         if unit_2 == "gallon":
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000264, 0)} {unit_2}")
                     elif unit_1 == "cbm":
                         if unit_2 == "cbcm":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e+06, 0)} {unit_2}")
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e+6, 0)} {unit_2}")
                         if unit_2 == "L":
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
                         if unit_2 == "mL":
@@ -1316,7 +1317,7 @@ while ultastop != 1:
                         if unit_2 == "cbcm":
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
                         if unit_2 == "cbm":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-03, 0)} {unit_2}")
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-3, 0)} {unit_2}")
                         if unit_2 == "mL":
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
                         if unit_2 == "gallon":
@@ -1325,9 +1326,9 @@ while ultastop != 1:
                         if unit_2 == "cbcm":
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 0)} {unit_2}")
                         if unit_2 == "cbm":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-06, 0)} {unit_2}")
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-6, 0)} {unit_2}")
                         if unit_2 == "L":
-                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-03, 0)} {unit_2}")
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-3, 0)} {unit_2}")
                         if unit_2 == "gallon":
                             print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000264, 0)} {unit_2}")
                     elif unit_1 == "gallon":
