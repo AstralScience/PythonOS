@@ -41,6 +41,7 @@ main = None
 clicks = None
 finished_cps = False
 rank = None
+root = None
 
 
 class CPS:
@@ -67,9 +68,9 @@ class CPS:
         elif finishing_cps < 6.0:
             rank.config(text="You Rank: Hare | Quite fast!")
         elif finishing_cps < 6.7:
-            rank.config(text="Your Rank: Leopard | Nice! Almost reachin' the average max!")
+            rank.config(text="Your Rank: Leopard | Excellent finger clickin'!")
         elif finishing_cps < 8:
-            rank.config(text="Your Rank: Cheetah | You're really good at this! Better than a lot of people!")
+            rank.config(text="Your Rank: Cheetah | You're really good at this!")
         else:
             rank.config(text="Your Rank: Falcon | AIN'T NO WAY!")
         if main != None:
@@ -101,6 +102,10 @@ class CPS:
                     clicks += 1
 
                     main.config(text=f"Clicks: {clicks}")
+
+    def close_cps():
+        global root
+        root.destroy()
 
 
 
@@ -639,7 +644,7 @@ while ultastop != 1:
                 running = False
                 root = Tk()
                 root.title("Click Speed Test")
-                root.geometry("350x300")
+                root.geometry("350x320")
                 root.resizable(False, False)
 
 
@@ -647,10 +652,12 @@ while ultastop != 1:
 
 
                 main = Button(root, text="Press to Start", height=10, width=50, command=CPS.click)
+                close = Button(root, text="Close UI", height=2, width=50, command=CPS.close_cps)
 
                 rank = ttk.Label(root, text="Your Rank: Undefined")
                 label.pack(padx=20, pady=20)
-                main.pack(padx=20,side=TOP)
+                main.pack(padx=20)
+                close.pack(padx=20)
                 rank.pack(padx=20, pady=20)
 
 
