@@ -1516,6 +1516,8 @@ while ultastop != 1:
                     else:
                         registered_latitude = eval(Cypher.decrypt(selection6))
 
+                    Security.userToDisplay()
+
 
             if command == "!data reset":
                 if Security.verify(user):
