@@ -256,7 +256,8 @@ commandlist = ["!cmds | Lists every command", "!help | Gives brief description o
                            "!settings view | Allows you to view the settings",
                            "!settings change | Allows you to change the current settings",
                            "!weather | Allows you to view the weather of a region",
-                        "!data save | Saves OS data", "!data load | Loads data to OS", "!data reset | Resets most data"]
+                        "!data save | Saves OS data", "!data load | Loads data to OS", "!data reset | Resets most data",
+               "!plotting bar | Plots a bar chart", "!plotting pie | Plots a pie chart", "!browse | Browse the public files of your computer"]
 class QSharp:
     def createCommand(title, description, execute):
         global commands
@@ -363,6 +364,9 @@ class Cypher:
         d = Cypher.reverseQwerty(c, 2)
         return d
 
+def conversion(number, constant1, factor, constant2):
+    return (number+constant1) * factor + constant2
+
 
 
 
@@ -405,11 +409,13 @@ visibility = [True]
 registered_locations = []
 registered_longitude = []
 registered_latitude = []
-commands = ["!cmds", "!help", "!users", "!listplot", "!logout", "!exit", "!graph basic", "!graph advanced", "!files check", "!files manage", "!ai", "!settings view", "!settings change", "!weather", "!settings reset", "!QCode", "!run", "!data save", "!data load"]
+commands = ["!cmds", "!help", "!users", "!listplot", "!logout", "!exit", "!graph basic", "!graph advanced", "!files check", "!files manage", "!ai", "!settings view", "!settings change", "!weather", "!settings reset", "!QCode", "!run", "!data save", "!data load", "!browse", "!plotting bar", "!plotting pie"]
 bonus_commands = []
 bonus_executions = []
 stop = 0
 ultastop = 0
+public_files = []
+download_file = [["dear reader: \n hello reader. thx for using python os \n sincerely: \n some random guy", "flipe", "you got mail!"]]
 
 
 user = "Administrator"
@@ -464,6 +470,7 @@ while ultastop != 1:
                     longitude.append(0)
                     latitude.append(0)
                     visibility.append(True)
+                    download_file.append(["dear reader: \n hello reader. thx for using python os \n sincerely: \n some random guy", "flipe", "you got mail!"])
                     user = login
                     creation = False
                 else:
@@ -1028,11 +1035,304 @@ while ultastop != 1:
                     longitude.insert(location_user_indice, 0)
                     latitude.insert(location_user_indice, 0)
 
+            if command == "!convert":
+                measurement = input("Please select a measurement form (Length/Area/Volume/Mass/Temperature): ")
+                whitespace(2)
+                if measurement == "Length":
+                    print("Units: ft, inch, cm, m, mm, km, mile")
+                    unit_1 = input("What is your first unit? ")
+                    unit_2 = input("What is your second unit? ")
+                    value_1 = int(input(f"How many {unit_1} do you want to convert to {unit_2}? "))
+                    if unit_1 == "ft":
+                        if unit_2 == "inch":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 12, 0)} {unit_2}")
+                        if unit_2 == "cm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 30.48, 0)} {unit_2}")
+                        if unit_2 == "m":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.3048, 0)} {unit_2}")
+                        if unit_2 == "mm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 304.8, 0)} {unit_2}")
+                        if unit_2 == "km":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0003048, 0)} {unit_2}")
+                        if unit_2 == "mile":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000189394, 0)} {unit_2}")
+                    elif unit_1 == "inch":
+                        if unit_2 == "ft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0833333, 0)} {unit_2}")
+                        if unit_2 == "cm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 2.54, 0)} {unit_2}")
+                        if unit_2 == "m":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0254, 0)} {unit_2}")
+                        if unit_2 == "mm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 25.4, 0)} {unit_2}")
+                        if unit_2 == "km":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 2.54e-5, 0)} {unit_2}")
+                        if unit_2 == "mile":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1.57828e-5, 0)} {unit_2}")
+
+                    elif unit_1 == "cm":
+                        if unit_2 == "ft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0328084, 0)} {unit_2}")
+                        if unit_2 == "inch":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.393701, 0)} {unit_2}")
+                        if unit_2 == "m":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.01, 0)} {unit_2}")
+                        if unit_2 == "mm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 10, 0)} {unit_2}")
+                        if unit_2 == "km":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.00001, 0)} {unit_2}")
+                        if unit_2 == "mile":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 6.21371e-6, 0)} {unit_2}")
+
+                    elif unit_1 == "m":
+                        if unit_2 == "ft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 3.28084, 0)} {unit_2}")
+                        if unit_2 == "inch":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 39.3701, 0)} {unit_2}")
+                        if unit_2 == "cm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 100, 0)} {unit_2}")
+                        if unit_2 == "mm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
+                        if unit_2 == "km":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.001, 0)} {unit_2}")
+                        if unit_2 == "mile":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000621371, 0)} {unit_2}")
+                    elif unit_1 == "mm":
+                        if unit_2 == "ft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.00328084, 0)} {unit_2}")
+                        if unit_2 == "inch":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0393701, 0)} {unit_2}")
+                        if unit_2 == "cm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.1, 0)} {unit_2}")
+                        if unit_2 == "m":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.001, 0)} {unit_2}")
+                        if unit_2 == "km":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-6, 0)} {unit_2}")
+                        if unit_2 == "mile":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 6.21371e-7, 0)} {unit_2}")
+                    elif unit_1 == "km":
+                        if unit_2 == "ft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 3280.84, 0)} {unit_2}")
+                        if unit_2 == "inch":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 39370.1, 0)} {unit_2}")
+                        if unit_2 == "cm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 100000, 0)} {unit_2}")
+                        if unit_2 == "m":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
+                        if unit_2 == "mm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000000, 0)} {unit_2}")
+                        if unit_2 == "mile":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.621371, 0)} {unit_2}")
+
+                    elif unit_1 == "mile":
+                        if unit_2 == "ft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 5280, 0)} {unit_2}")
+                        if unit_2 == "inch":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 63360, 0)} {unit_2}")
+                        if unit_2 == "cm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 160934, 0)} {unit_2}")
+                        if unit_2 == "m":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1609.34, 0)} {unit_2}")
+                        if unit_2 == "mm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1.609e+6, 0)} {unit_2}")
+                        if unit_2 == "km":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1.60934, 0)} {unit_2}")
+
+                    else:
+                        print("Sorry I didn't get that, were you trying to use a different unit?")
+                elif measurement == "Area":
+                    print("Units: sqcm, sqm, sqkm, acre, sqft")
+                    unit_1 = input("What is your first unit? ")
+                    unit_2 = input("What is your second unit? ")
+                    value_1 = int(input(f"How many {unit_1} do you want to convert to {unit_2}? "))
+                    if unit_1 == "sqcm":
+                        if unit_2 == "sqm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0001, 0)} {unit_2}")
+                        if unit_2 == "sqkm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-10, 0)} {unit_2}")
+                        if unit_2 == "acre":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 2.47105163e-8, 0)} {unit_2}")
+                        if unit_2 == "sqft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.00107639, 0)} {unit_2}")
+                    elif unit_1 == "sqm":
+                        if unit_2 == "sqcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 10000, 0)} {unit_2}")
+                        if unit_2 == "sqkm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-6, 0)} {unit_2}")
+                        if unit_2 == "acre":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000247105, 0)} {unit_2}")
+                        if unit_2 == "sqft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 10.7639, 0)} {unit_2}")
+                    elif unit_1 == "sqkm":
+                        if unit_2 == "sqcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e+10, 0)} {unit_2}")
+                        if unit_2 == "sqm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e+6, 0)} {unit_2}")
+                        if unit_2 == "acre":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 247.105, 0)} {unit_2}")
+                        if unit_2 == "sqft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1.076e+7, 0)} {unit_2}")
+                    elif unit_1 == "acre":
+                        if unit_2 == "sqcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 4.047e+7, 0)} {unit_2}")
+                        if unit_2 == "sqm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 4046.86, 0)} {unit_2}")
+                        if unit_2 == "sqkm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.00404686, 0)} {unit_2}")
+                        if unit_2 == "sqft":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 43560, 0)} {unit_2}")
+                    elif unit_1 == "sqft":
+                        if unit_2 == "sqcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 929.03, 0)} {unit_2}")
+                        if unit_2 == "sqm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.092903, 0)} {unit_2}")
+                        if unit_2 == "sqkm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 9.2903e-8, 0)} {unit_2}")
+                        if unit_2 == "acre":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 2.2957e-5, 0)} {unit_2}")
+                    else:
+                        print("Sorry I didn't get that, were you trying to use a different unit?")
+                elif measurement == "Volume":
+                    print("Units: cbcm, cbm, L, mL, gallon")
+                    unit_1 = input("What is your first unit? ")
+                    unit_2 = input("What is your second unit? ")
+                    value_1 = int(input(f"How many {unit_1} do you want to convert to {unit_2}? "))
+                    if unit_1 == "cbcm":
+                        if unit_2 == "cbm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-06, 0)} {unit_2}")
+                        if unit_2 == "L":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-03, 0)} {unit_2}")
+                        if unit_2 == "mL":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 0)} {unit_2}")
+                        if unit_2 == "gallon":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000264, 0)} {unit_2}")
+                    elif unit_1 == "cbm":
+                        if unit_2 == "cbcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e+06, 0)} {unit_2}")
+                        if unit_2 == "L":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
+                        if unit_2 == "mL":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000000, 0)} {unit_2}")
+                        if unit_2 == "gallon":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 264.172, 0)} {unit_2}")
+                    elif unit_1 == "L":
+                        if unit_2 == "cbcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
+                        if unit_2 == "cbm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-03, 0)} {unit_2}")
+                        if unit_2 == "mL":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
+                        if unit_2 == "gallon":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.264172, 0)} {unit_2}")
+                    elif unit_1 == "mL":
+                        if unit_2 == "cbcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 0)} {unit_2}")
+                        if unit_2 == "cbm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-06, 0)} {unit_2}")
+                        if unit_2 == "L":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1e-03, 0)} {unit_2}")
+                        if unit_2 == "gallon":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000264, 0)} {unit_2}")
+                    elif unit_1 == "gallon":
+                        if unit_2 == "cbcm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 3787.878788, 0)} {unit_2}")
+                        if unit_2 == "cbm":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.00378541, 0)} {unit_2}")
+                        if unit_2 == "mL":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 3787.878788, 0)} {unit_2}")
+                        if unit_2 == "L":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 3.78541, 0)} {unit_2}")
+                    else:
+                        print("Sorry I didn't get that, were you trying to use a different unit?")
+                elif measurement == "Mass":
+                    print("Units: mg, g, kg, lb, oz")
+                    unit_1 = input("What is your first unit? ")
+                    unit_2 = input("What is your second unit? ")
+                    value_1 = int(input(f"How many {unit_1} do you want to convert to {unit_2}? "))
+                    if unit_1 == "mg":
+                        if unit_2 == "g":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.001, 0)} {unit_2}")
+                        if unit_2 == "kg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.000001, 0)} {unit_2}")
+                        if unit_2 == "lb":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 2.20462e-6, 0)} {unit_2}")
+                        if unit_2 == "oz":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 3.5274e-5, 0)} {unit_2}")
+                    elif unit_1 == "g":
+                        if unit_2 == "mg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
+                        if unit_2 == "kg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.001, 0)} {unit_2}")
+                        if unit_2 == "lb":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.00220462, 0)} {unit_2}")
+                        if unit_2 == "oz":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.035274, 0)} {unit_2}")
+                    elif unit_1 == "kg":
+                        if unit_2 == "mg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000000, 0)} {unit_2}")
+                        if unit_2 == "g":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1000, 0)} {unit_2}")
+                        if unit_2 == "lb":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 2.20462, 0)} {unit_2}")
+                        if unit_2 == "oz":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 35.274, 0)} {unit_2}")
+                    elif unit_1 == "lb":
+                        if unit_2 == "mg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 453592, 0)} {unit_2}")
+                        if unit_2 == "g":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 453.592, 0)} {unit_2}")
+                        if unit_2 == "kg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.453592, 0)} {unit_2}")
+                        if unit_2 == "oz":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 16, 0)} {unit_2}")
+                    elif unit_1 == "oz":
+                        if unit_2 == "mg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 28349.5, 0)} {unit_2}")
+                        if unit_2 == "g":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 28.3495, 0)} {unit_2}")
+                        if unit_2 == "kg":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0283495, 0)} {unit_2}")
+                        if unit_2 == "lb":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 0.0625, 0)} {unit_2}")
+                    else:
+                        print("Sorry I didn't get that, were you trying to use a different unit?")
+                elif measurement == "Temperature":
+                    print("Units: C, F, K")
+                    unit_1 = input("What is your first unit? ")
+                    unit_2 = input("What is your second unit? ")
+                    value_1 = int(input(f"How many {unit_1} do you want to convert to {unit_2}? "))
+                    if unit_1 == "C":
+                        if unit_2 == "F":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1.8, 32)} {unit_2}")
+                        if unit_2 == "K":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 273.15)} {unit_2}")
+                    elif unit_1 == "F":
+                        if unit_2 == "C":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1.8, 32)} {unit_2}")
+                        if unit_2 == "K":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, (-32), 0.55555, 0)} {unit_2}")
+                    elif unit_1 == "K":
+                        if unit_2 == "C":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, 0, 1, 273.15)} {unit_2}")
+                        if unit_2 == "F":
+                            print(f"{value_1} {unit_1} = {conversion(value_1, (-273.15), 1.8, 32)} {unit_2}")
+                else:
+                    print("Please pick a valid measurement.")
+
+
+
+
+
+
+
+
+
+
             if command == "!QCode":
                 print("Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
                 whitespace(1)
                 print("Coding Space: (Use the symbol '~' to indent)")
-                print("'Finish' to stop coding | 'Edit' to edit a line of your code.")
+                print("'Finish' to stop coding | 'Edit' to edit a line of your code | 'Push' to insert a new line in the middle of your code")
                 coding = True
                 line = 1
                 return_code = []
@@ -1057,6 +1357,19 @@ while ultastop != 1:
                             print("Coding Space: (Use the symbol '~' to indent)")
                             print("# 'Finish' to stop coding | 'Edit' to edit a line of your code.")
                             print(f"Line {i+1} | >_ {return_code[i]}")
+                    elif codeLine == "Push":
+                        new_line = input("# Where do you want your new line? ")
+                        new_to = input("# What do you want the content of your new line to be? ")
+                        return_code.insert(int(new_line)-1, new_to)
+                        type_code.insert(int(new_line) - 1, new_to)
+                        clear(1)
+                        for i in range(0, len(return_code)):
+                            print(
+                                "Welcome to Q#! It's Python but with integrations to the OS, allowing you to create applications")
+                            whitespace(1)
+                            print("Coding Space: (Use the symbol '~' to indent)")
+                            print("# 'Finish' to stop coding | 'Edit' to edit a line of your code.")
+                            print(f"Line {i + 1} | >_ {return_code[i]}")
 
                     else:
                         codeLine = Graphing.transform(codeLine, "~", "    ")
@@ -1071,7 +1384,7 @@ while ultastop != 1:
                     concerning = True
                 response = co.generate(
                     model='command-r-plus',  # Choose the model (e.g., 'xlarge', 'medium', etc.)
-                    prompt=f"User: Check if the following code is trying to use the Class 'Cypher' or 'Security', use encryption/decryption techniques, or fetch/change data in the lists: 'passwords', 'users', 'files', 'locations', 'display_location', 'longitude', 'latitude', 'display_users', 'registered_locations', 'registered_longitude', or 'registered_latitude'. If it does, respond with ONLY 'Y', if not, respond with ONLY 'N'. Here is the code: {'\n'.join(return_code)}. Code concerning: {concerning}. AI Assistant: ",
+                    prompt=f"User: Check if the following code is trying to use the Class 'Cypher' or 'Security', use encryption/decryption techniques, or fetch/change data in the lists: 'passwords', 'users', 'files', 'locations', 'display_location', 'longitude', 'latitude', 'display_users', 'download_file', 'registered_locations', 'registered_longitude', or 'registered_latitude'. If it does, respond with ONLY 'Y', if not, respond with ONLY 'N'. Here is the code: {'\n'.join(return_code)}. Code concerning: {concerning}. AI Assistant: ",
                     max_tokens=10
                 )
                 print(response.generations[0].text)
@@ -1165,10 +1478,9 @@ while ultastop != 1:
                     if selection2 == 'Skip':
                         print("Passwords not loaded.")
                     else:
-                        print(passwords)
+
                         passwords = eval(Cypher.decrypt(selection2))
-                        print(passwords)
-                        print(passwords[Security.indiceFind(user)])
+
 
                     selection3 = input("Load Files: ")
                     if selection3 == 'Skip':
@@ -1204,19 +1516,77 @@ while ultastop != 1:
                     whitespace(1)
                     print("Process finished.")
 
+            if command == "!plotting bar":
+                bar_x = False
+                x_bar = []
+                while bar_x == False:
+                    add_x = input("Add a new item ('Finish' to stop): ")
+                    if add_x == 'Finish':
+                        bar_x = True
+                    else:
+                        x_bar.append(add_x)
+
+                y_bar = []
+
+                for i in range(0, len(x_bar)):
+                    add_y = input(f"Add a value to {x_bar[i]}: ")
+                    y_bar.append(int(add_y))
+
+                whitespace(1)
+                hv = input("Horizontal or Vertical? ")
+
+                if hv == "Horizontal":
+                    mat.barh(x_bar, y_bar)
+                else:
+                    mat.bar(x_bar, y_bar)
+                mat.title(input("Add a title to your bar chart: "))
+                mat.xlabel(input("Choose a label for your items: "))
+                mat.ylabel(input("Choose a label for your values: "))
+                mat.show()
+
+            if command == "!plotting pie":
+                pie_x = False
+                x_pie = []
+                while pie_x == False:
+                    add_x = input("Add a new item ('Finish' to stop): ")
+                    if add_x == 'Finish':
+                        pie_x = True
+                    else:
+                        x_pie.append(add_x)
+
+                y_pie = []
+
+                for i in range(0, len(x_pie)):
+                    add_y = input(f"Add a value to {x_pie[i]} (Total Weight is {sum(y_pie)}): ")
+                    y_pie.append(int(add_y))
+
+                whitespace(1)
+
+
+
+                pie_title = (input("Add a title to your pie chart: "))
+
+                fig, ax = mat.subplots()
+                ax.pie(y_pie, labels=x_pie, autopct='%1.1f%%')
+                ax.set(title=pie_title)
+                mat.show()
+
+
+
+
             if command == "!files manage":
-                print("step")
+
                 execute_path = [str(users.index(user))]
-                print("step")
+
                 openstop = False
-                print("step")
+
                 user_index = users.index(user)
-                print("step")
+
                 open_path = copy.deepcopy(files[user_index])
-                print("step")
+
                 print(
                     "Please select a folder/file to open (Select an index | Say 'Reset' to reset path | Say 'Stop' to stop the process): ")
-                print("Additionally, say 'Add' to add files, 'Remove' to remove files, or 'Execute' to run Q# files")
+                print("Additionally, say 'Add' to add files, 'Remove' to remove files, 'Execute' to run Q# files, or 'Upload' to upload your file to the public files storage")
                 print("Here are your files: ")
                 whitespace(1)
                 user_index = users.index(user)
@@ -1261,14 +1631,21 @@ while ultastop != 1:
                             add_location = input(
                                 "Please input the folder you want to add your file to (Use Main PC for base menu): ")
                             if add_location == "Main PC":
-                                ff = input("File or Folder?")
-                                if ff == "File":
+                                df = input("Would you like to use your download file, or create a new file/folder? (File | Create) ")
+                                if df == "Create":
+                                    ff = input("File or Folder?")
+                                    if ff == "File":
+                                        files[verycooluserindice].append(
+                                            [Graphing.transform(Graphing.transform(input(
+                                                "Please select what you want in your file (@ for new line, ~ for indent): "),
+                                                                                   "@", "\n"), "~", "    "), "flipe",
+                                             input("Please select a name for your file: ")])
+                                    if ff == "Folder":
+                                        files[verycooluserindice].append(
+                                            [input("Please select a name for your folder: ")])
+                                else:
+                                    files[verycooluserindice].append(download_file[verycooluserindice])
 
-                                    files[verycooluserindice].append(
-                                        [Graphing.transform(Graphing.transform(input("Please select what you want in your file (@ for new line, ~ for indent): "), "@", "\n"), "~", "    "), "flipe",
-                                         input("Please select a name for your file: ")])
-                                if ff == "Folder":
-                                    files[verycooluserindice].append([input("Please select a name for your folder: ")])
                             else:
 
                                 add_path = copy.deepcopy(files[verycooluserindice])
@@ -1363,34 +1740,48 @@ while ultastop != 1:
                                             print(
                                                 "There's... nothing in this folder/file....")
                                     elif add_opening == "Finish" and steps >= 2:
-                                        ff = input("File or Folder?")
-                                        if ff == "File":
+                                        df = input("Would you like to use your download file, or create a new file/folder? (File | Create) ")
+                                        if df == "Create":
+                                            ff = input("File or Folder?")
+                                            if ff == "File":
+                                                manual_add_location = eval("files[" + "][".join(
+                                                    real_add_path) + "][-1]")
+                                                exec("files[" + "][".join(
+                                                    real_add_path) + "].pop(-1)")
+                                                exec("files[" + "][".join(
+                                                    real_add_path) + "].append([Graphing.transform(Graphing.transform(input('Please select what you want in your file (@ for new line, ~ for indent): '),'@', '\n'), '~', '    '),'flipe',input('Please select a name for your file: ')])")
+                                                exec("files[" + "][".join(
+                                                    real_add_path) + "].append(manual_add_location)")
+                                            manual_add_stop = True
+                                            add_opening = "Cancel"
+                                            opening = "Reset"
 
+                                            if ff == "Folder":
+                                                manual_add_location = eval("files[" + "][".join(
+                                                    real_add_path) + "][-1]")
+                                                exec("files[" + "][".join(
+                                                    real_add_path) + "].pop(-1)")
+                                                exec("files[" + "][".join(
+                                                    real_add_path) + "].append([input('Please select a name for your folder: ')])")
+
+                                                exec("files[" + "][".join(
+                                                    real_add_path) + "].append(manual_add_location)")
+                                            manual_add_stop = True
+                                            add_opening = "Cancel"
+                                            opening = "Reset"
+                                        else:
                                             manual_add_location = eval("files[" + "][".join(
                                                 real_add_path) + "][-1]")
                                             exec("files[" + "][".join(
                                                 real_add_path) + "].pop(-1)")
                                             exec("files[" + "][".join(
-                                                real_add_path) + "].append([Graphing.transform(Graphing.transform(input('Please select what you want in your file (@ for new line, ~ for indent): '),'@', '\n'), '~', '    '),'flipe',input('Please select a name for your file: ')])")
+                                                real_add_path) + "].append(download_file[Security.indiceFind(user)])")
                                             exec("files[" + "][".join(
                                                 real_add_path) + "].append(manual_add_location)")
-                                        manual_add_stop = True
-                                        add_opening = "Cancel"
-                                        opening = "Reset"
+                                            manual_add_stop = True
+                                            add_opening = "Cancel"
+                                            opening = "Reset"
 
-                                        if ff == "Folder":
-                                            manual_add_location = eval("files[" + "][".join(
-                                                real_add_path) + "][-1]")
-                                            exec("files[" + "][".join(
-                                                real_add_path) + "].pop(-1)")
-                                            exec("files[" + "][".join(
-                                                real_add_path) + "].append([input('Please select a name for your folder: ')])")
-
-                                            exec("files[" + "][".join(
-                                                real_add_path) + "].append(manual_add_location)")
-                                        manual_add_stop = True
-                                        add_opening = "Cancel"
-                                        opening = "Reset"
                                     elif add_opening == "Cancel":
                                         print("ok")
                                         manual_add_stop = True
@@ -1525,6 +1916,16 @@ while ultastop != 1:
 
 
 
+                        elif opening == "Upload":
+                            upload_file = eval("files[" + "][".join(execute_path) + "]")
+                            if upload_file in public_files:
+                                print(f"File/folder could not be upload. public_files already contains '{upload_file}'")
+                            else:
+                                public_files.append(upload_file)
+                                print("Upload Succesful")
+
+
+
 
 
 
@@ -1545,7 +1946,7 @@ while ultastop != 1:
 
                                     response = co.generate(
                                         model='command-r-plus',  # Choose the model (e.g., 'xlarge', 'medium', etc.)
-                                        prompt=f"User: Check if the following code is trying to use the Class 'Cypher' or 'Security', use encryption/decryption techniques, or fetch/change data in the lists: 'passwords', 'users', 'files', 'locations', 'display_location', 'longitude', 'latitude', 'display_users', 'registered_locations', 'registered_longitude', or 'registered_latitude'. If it does, respond with ONLY 'Y', if not, respond with ONLY 'N'. Here is the code: {eval("files[" + "][".join(execute_path) + "][0]")}. Code concerning: {concerning}. AI Assistant: ",
+                                        prompt=f"User: Check if the following code is trying to use the Class 'Cypher' or 'Security', use encryption/decryption techniques, or fetch/change data in the lists: 'passwords', 'users', 'files', 'locations', 'display_location', 'longitude', 'latitude', 'display_users', 'download_file', 'registered_locations', 'registered_longitude', or 'registered_latitude'. If it does, respond with ONLY 'Y', if not, respond with ONLY 'N'. Here is the code: {eval("files[" + "][".join(execute_path) + "][0]")}. Code concerning: {concerning}. AI Assistant: ",
                                         max_tokens=10
                                     )
                                     print(response.generations[0].text)
@@ -1624,6 +2025,25 @@ while ultastop != 1:
                                   "invalid literal | Try entering correct syntax and resetting"], "Errors")
                         whitespace(1)
                         print(f"Debugging for developers: {files[verycooluserindice]}")
+
+            if command == "!browse":
+                print("Welcome to the Public Files section! Think of it as your computer shared space.")
+                whitespace(1)
+                volume = input("Select a volume to view (Each Volume has 5 Files): ")
+                whitespace(2)
+                ab = [f"{n[-1]} | Index {public_files.index(n) + 1}" for n in public_files if public_files.index(n) <= int(volume)*5 - 1 and public_files.index(n) >= (int(volume) - 1) * 5]
+                listPlot(ab, f"Contents of Public Files in Volume {volume}")
+                whitespace(1)
+                downloading = input("Would you like to download one of these files (Y/N)? ")
+                if 'Y' in downloading:
+                    print("Alrighty!")
+                    whitespace(1)
+                    download_index = int(input("Choose an index to download: ")) - 1
+                    download_file.pop(Security.indiceFind(user))
+                    download_file.insert(Security.indiceFind(user), public_files[download_index])
+                    print("Your download file is now ready. When adding a file in !files manage, you can select to add the download file, which will add the file you just selected!")
+
+
 
             whitespace(2)
         except Exception as e:
