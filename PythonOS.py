@@ -16,8 +16,12 @@ from tkinter import ttk
 from retry_requests import retry
 import threading
 import pyperclip
+from colorist import ColorRGB
 
+str_col = ColorRGB(170, 170, 255)
+int_col = ColorRGB(170,255,170)
 
+print(f"{str_col}'This is a great string!'{str_col.OFF} | {int_col}123{int_col.OFF} ")
 
 co = cohere.Client('OtNd2ISeMuCKurDYOto25OalvrGZpRic57LBx0rR')
 
@@ -42,6 +46,23 @@ clicks = None
 finished_cps = False
 rank = None
 root = None
+ready_to_close = True
+close = None
+
+print("\033[31m" + "abc" + "\033[0m")
+def instances(str, instance):
+    const = 0
+    stra = list(str)
+    insten = len(instance) - 1
+    count = 0
+    print(stra)
+    for i in range(0, len(stra) - const):
+
+        if stra[i + const:i + const + insten + 1] == list(instance):
+            count += 1
+            const += insten
+
+    return count
 
 
 class CPS:
@@ -51,6 +72,10 @@ class CPS:
         global running
         global finished_cps
         global rank
+        global ready_to_close
+        global close
+        ready_to_close = False
+        close.config(text="You Cannot Close Right Now!")
         running = True
         time.sleep(5)
         running = False
@@ -76,8 +101,12 @@ class CPS:
         if main != None:
             main.config(text=f"Finished with CPS of {clicks/5}!")
         finished_cps = True
+        ready_to_close = False
+        close.config(text="You Cannot Close Right Now!")
         time.sleep(5)
         clicks = 0
+        ready_to_close = True
+        close.config(text="Close UI")
         main.config(text="Press to Start!")
         rank.config(text="Your Rank: Undefined")
         finished_cps = False
@@ -88,6 +117,10 @@ class CPS:
         global running
         global finished_cps
         global rank
+        global ready_to_close
+        global close
+
+
         if clicks != None:
             if finished_cps:
                 main.config(text=f"CPS: {clicks/5}")
@@ -105,7 +138,10 @@ class CPS:
 
     def close_cps():
         global root
-        root.destroy()
+        global ready_to_close
+        if ready_to_close:
+            root.destroy()
+
 
 
 
@@ -1435,6 +1471,7 @@ while ultastop != 1:
                 line = 1
                 return_code = []
                 type_code = []
+                indent = [0]
                 importing = input("Would you like to import from Q# file format text (Y/N)? ")
                 if "Y" in importing:
                     whitespace(2)
@@ -1648,48 +1685,85 @@ while ultastop != 1:
                 print("Registered Locations: " + Cypher.encrypt(str(registered_locations)))
                 print("Registered LONGITUDE (E): " + Cypher.encrypt(str(registered_longitude)))
                 print("Registered LATITUDE (N): " + Cypher.encrypt(str(registered_latitude)))
+                whitespace(1)
+                print("Your computer's clipboard should now have the quick load string.")
+                print("Paste it in when loading data to load quickly!")
+                pyperable = (f"[{Cypher.encrypt(str(users))}, {Cypher.encrypt(str(passwords))}, {Cypher.encrypt(str(files))}, "
+                             f"{Cypher.encrypt(str(registered_locations))}, {Cypher.encrypt(str(registered_longitude))}, "
+                             f"{Cypher.encrypt(str(registered_latitude))}]")
+                pyperclip.copy(pyperable)
             if command == "!data load":
                 if Security.verify(user):
+
                     print(
                         "Check your encryptions to load everything up. Say 'Skip' if you don't want to load a specific part of data.")
                     whitespace(1)
-                    selection1 = input("Load Users: ")
-                    if selection1 == 'Skip':
-                        print("Users not loaded.")
-                    else:
-                        users = eval(Cypher.decrypt(selection1))
+                    quick_load = input("Would you like to use quick load? (Y/N): ")
+                    if "Y" in quick_load:
+                        inputted_load = input("Input your quick load string: ")
+                        users = eval(Cypher.decrypt(str(eval(inputted_load)[0])))
+                        passwords = eval(Cypher.decrypt(str(eval(inputted_load)[1])))
+                        files = eval(Cypher.decrypt(str(eval(inputted_load)[2])))
+                        registered_locations = eval(Cypher.decrypt(str(eval(inputted_load)[3])))
+                        registered_longitude = eval(Cypher.decrypt(str(eval(inputted_load)[4])))
+                        registered_latitude = eval(Cypher.decrypt(str(eval(inputted_load)[5])))
 
-                    selection2 = input("Load Passwords: ")
-                    if selection2 == 'Skip':
-                        print("Passwords not loaded.")
-                    else:
+                        visibility = []
+                        for i in range(0, len(users)):
+                            visibility.append(True)
 
-                        passwords = eval(Cypher.decrypt(selection2))
+                        for i in range(0, len(users)):
+                            if users[i][-1] == "®":
+                                visibility.pop(i)
+                                visibility.insert(i, False)
+                            else:
+                                visibility.pop(i)
+                                visibility.insert(i, True)
 
+                    else:
+                        selection1 = input("Load Users: ")
+                        if selection1 == 'Skip':
+                            print("Users not loaded.")
+                        else:
+                            users = eval(Cypher.decrypt(selection1))
 
-                    selection3 = input("Load Files: ")
-                    if selection3 == 'Skip':
-                        print("Files not loaded.")
-                    else:
-                        files = eval(Cypher.decrypt(selection3))
+                        selection2 = input("Load Passwords: ")
+                        if selection2 == 'Skip':
+                            print("Passwords not loaded.")
+                        else:
 
-                    selection4 = input("Load Registered Locations: ")
-                    if selection4 == 'Skip':
-                        print("Locations not loaded.")
-                    else:
-                        registered_locations = eval(Cypher.decrypt(selection4))
-                    selection5 = input("Load Registered Longitude: ")
-                    if selection5 == 'Skip':
-                        print("Longitude not loaded.")
-                    else:
-                        registered_longitude = eval(Cypher.decrypt(selection5))
-                    selection6 = input("Load Registered Latitude: ")
-                    if selection6 == 'Skip':
-                        print("Latitude not loaded.")
-                    else:
-                        registered_latitude = eval(Cypher.decrypt(selection6))
+                            passwords = eval(Cypher.decrypt(selection2))
+
+                        selection3 = input("Load Files: ")
+                        if selection3 == 'Skip':
+                            print("Files not loaded.")
+                        else:
+                            files = eval(Cypher.decrypt(selection3))
+
+                        selection4 = input("Load Registered Locations: ")
+                        if selection4 == 'Skip':
+                            print("Locations not loaded.")
+                        else:
+                            registered_locations = eval(Cypher.decrypt(selection4))
+                        selection5 = input("Load Registered Longitude: ")
+                        if selection5 == 'Skip':
+                            print("Longitude not loaded.")
+                        else:
+                            registered_longitude = eval(Cypher.decrypt(selection5))
+                        selection6 = input("Load Registered Latitude: ")
+                        if selection6 == 'Skip':
+                            print("Latitude not loaded.")
+                        else:
+                            registered_latitude = eval(Cypher.decrypt(selection6))
 
                     Security.userToDisplay()
+
+            if command == "!documentation":
+                print("Hello! Welcome to the Q# Documentation!")
+                whitespace(1)
+                print("Most of the documentation is located in the GitHub page.")
+                print("Link: https://github.com/AstralScience/PythonOS/wiki/The-Python-OS")
+                print("You will find the Q# documentation in the 'Q#' category.")
 
 
             if command == "!data reset":
@@ -1727,9 +1801,11 @@ while ultastop != 1:
                 else:
                     mat.bar(x_bar, y_bar)
                 mat.title(input("Add a title to your bar chart: "))
-                mat.xlabel(input("Choose a label for your items: "))
-                mat.ylabel(input("Choose a label for your values: "))
+                mat.xlabel(input("Choose a label for your x-axis: "))
+                mat.ylabel(input("Choose a label for your y-axis: "))
                 mat.show()
+
+
 
             if command == "!plotting pie":
                 pie_x = False
