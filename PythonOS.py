@@ -22,8 +22,8 @@ str_col = ColorRGB(170, 170, 255)
 int_col = ColorRGB(170,255,170)
 
 print(f"{str_col}'This is a great string!'{str_col.OFF} | {int_col}123{int_col.OFF} ")
-
-co = cohere.Client('OtNd2ISeMuCKurDYOto25OalvrGZpRic57LBx0rR')
+API = input("Please input your Cohere API Key: ")
+co = cohere.Client(API)
 
 
 
